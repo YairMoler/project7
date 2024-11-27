@@ -5,6 +5,7 @@ export default function Todos() {
   const [newTodo, setNewTodo] = useState("");
   //   let user = JSON.parse(localStorage.getItem("currentUser"));
   const user = { id: 1 };
+
   useEffect(() => {
     const showTodos = async () => {
       if (!user.id) {
@@ -70,6 +71,35 @@ export default function Todos() {
     }
   };
 
+  const updateTodo = async (todo) => {
+    try {
+      const res = await fetch(`http://localhost:3000/todos/${todo.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify({
+          completed: todo.completed === "true" ? "false" : "true",
+        }),
+      });
+      if (!res.ok) {
+        console.log("res: ", res);
+        throw new Error("could not delete the todos...");
+      } else {
+        const data = await res.json();
+        const updatedList = todosList.map((item) =>
+          item.id === todo.id
+            ? {
+                ...item,
+                completed: todo.completed === "true" ? "false" : "true",
+              }
+            : item
+        );
+        setTodosList(updatedList);
+      }
+    } catch (err) {
+      console.log("err: ", err);
+    }
+  };
+
   return (
     <>
       <h1>To Do List:</h1>
@@ -90,6 +120,15 @@ export default function Todos() {
                 src="https://www.shutterstock.com/image-vector/trash-can-icon-symbol-delete-260nw-1454137346.jpg"
                 alt="Delete"
               />
+            </button>
+            <br></br>
+            <button
+              onClick={() => updateTodo(item)}
+              style={{
+                color: item.completed === "true" ? "green" : "red",
+              }}
+            >
+              {item.completed === "true" ? "Check" : "Uncheck"}
             </button>
           </div>
         </>

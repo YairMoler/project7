@@ -74,4 +74,26 @@ router.delete("/:id", (req, res) => {
   });
 });
 
+//update todo
+router.patch("/:id", (req, res) => {
+  const id = req.params.id;
+  console.log("id: ", id);
+  const completed = req.body.completed;
+  con.query(
+    `update todos set completed="${completed}" where id =${id}`,
+    function (err, result) {
+      if (err) {
+        console.log("err: ", err);
+        res
+          .status(500)
+          .send(JSON.stringify({ message: "could not update the todo" }));
+      } else {
+        console.log("result: ", result);
+        res.status(200).send(JSON.stringify(completed));
+        console.log("success update the todos!");
+      }
+    }
+  );
+});
+
 module.exports = router;
