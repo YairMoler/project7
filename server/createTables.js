@@ -5,7 +5,6 @@ const fs = require("fs/promises");
 con.connect((err) => {
   if (err) throw err;
   console.log("Connected!");
-  createTables();
 });
 
 const filenames = ["users", "todos", "passwords", "posts", "comments"];
