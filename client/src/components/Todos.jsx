@@ -3,8 +3,7 @@ import React, { useState, useEffect } from "react";
 export default function Todos() {
   const [todosList, setTodosList] = useState([]);
   const [newTodo, setNewTodo] = useState("");
-  //   let user = JSON.parse(localStorage.getItem("currentUser"));
-  const user = { id: 1 };
+  let user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const showTodos = async () => {
@@ -12,7 +11,9 @@ export default function Todos() {
         return;
       }
       try {
-        const res = await fetch(`http://localhost:3000/todos?user_id=1`);
+        const res = await fetch(
+          `http://localhost:3000/todos?user_id=${user.id}`
+        );
         if (!res.ok) {
           console.log("res: ", res);
 
@@ -36,7 +37,7 @@ export default function Todos() {
         const res = await fetch(`http://localhost:3000/todos`, {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ title: newTodo, user_id: 1 }),
+          body: JSON.stringify({ title: newTodo, user_id: user.id }),
         });
         if (!res.ok) {
           console.log("res: ", res);

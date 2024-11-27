@@ -3,15 +3,17 @@ export default function Posts() {
   const [postsList, setPostsList] = useState([]);
   const [newTitle, setNewTitle] = useState("");
   const [newBody, setNewBody] = useState("");
-  //   let user = JSON.parse(localStorage.getItem("currentUser"));
-  const user = { id: 1 };
+  let user = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     const showPosts = async () => {
       if (!user.id) {
         return;
       }
       try {
-        const res = await fetch(`http://localhost:3000/posts?user_id=1`);
+        const res = await fetch(
+          `http://localhost:3000/posts?user_id=${user.id}`
+        );
         if (!res.ok) {
           console.log("res: ", res);
 
@@ -38,7 +40,7 @@ export default function Posts() {
           body: JSON.stringify({
             title: newTitle,
             body: newBody,
-            user_id: 1,
+            user_id: user.id,
           }),
         });
         if (!res.ok) {
@@ -93,7 +95,7 @@ export default function Posts() {
             {item.title}
             <br /> {item.body}
             <br />
-            {item.user_id === 1 && (
+            {item.user_id === user.id && (
               <button onClick={() => deletePost(item.id)}>
                 <img
                   src="https://www.shutterstock.com/image-vector/trash-can-icon-symbol-delete-260nw-1454137346.jpg"
