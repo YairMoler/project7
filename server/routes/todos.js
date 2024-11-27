@@ -1,14 +1,10 @@
 var express = require("express");
 var router = express.Router();
 const con = require("../con");
-const getId = require("../utils/getId");
-
+//get todos
 router.get("/", async (req, res) => {
-    const username = req.query.username;
-    console.log("username: ", username);
-    const user_id = await getId(username);
-    //   console.log("user_id : ", user_id);
-    console.log("hi");
+    const user_id = req.query.user_id;
+    console.log("user_id : ", user_id);
     if (!user_id) {
         return res.status(400).send(JSON.stringify({ message: "there is no user-id for the todos" }));
     }
@@ -22,17 +18,22 @@ router.get("/", async (req, res) => {
     });
 });
 
+//add todos
 router.post("/", (req, res) => {
     const title = req.body.title;
-    const username = req.body.username;
-    const user_id = getId(username);
-    con.query(`insert into `, function (err, result) {
-        if (err) {
-            res.status(500).send(JSON.stringify({ message: "could not send the todos" }));
-        } else {
-            res.status(200).send(JSON.stringify(result));
-            console.log("success get the todos!");
-        }
-    });
+    const user_id = req.body.user_id;
+    if (!title) {
+        return res.status(400).send(JSON.stringify({ message: "your title is empty" }));
+    } else {
+        con.query(`insert into todos (user_id , title , completed) values (${user_id} , "${title}" , "${false}")`, function (err, result) {
+            if (err) {
+                res.status(500).send(JSON.stringify({ message: "could not add the todo" }));
+            } else {
+                res.status(200).send(JSON.stringify({ message: " add succeed!" }));
+                console.log("success add the todos!");
+            }
+        });
+    }
 });
+
 module.exports = router;
