@@ -1,0 +1,6 @@
+{
+  "user_id": "int",
+  "post_id": "int",
+  "body": "text",
+  "name": "varchar(50)"
+}

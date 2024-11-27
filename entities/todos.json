@@ -1,0 +1,5 @@
+{
+  "user_id": "int",
+  "title": "varchar(200)",
+  "completed": "varchar(10)"
+}
