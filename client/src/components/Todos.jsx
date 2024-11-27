@@ -72,15 +72,26 @@ export default function Todos() {
 
   return (
     <>
+      <h1>To Do List:</h1>
       <div id="addTodo">
-        add todo:
+        add todo: <br />
         <input onChange={(e) => setNewTodo(e.target.value)} />
         <button onClick={addTodo}>+</button>
       </div>
+      <br />
       {todosList.map((item) => (
         <>
-          <li>{item.title}</li>
-          <button onClick={() => deleteTodo(item.id)}>delete:</button>
+          <div id="todo">
+            {item.title}
+            <button onClick={() => deleteTodo(item.id)}>
+              <img
+                width="40"
+                height="auto"
+                src="https://www.shutterstock.com/image-vector/trash-can-icon-symbol-delete-260nw-1454137346.jpg"
+                alt="Delete"
+              />
+            </button>
+          </div>
         </>
       ))}
     </>
