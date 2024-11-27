@@ -1,11 +1,10 @@
 var mysql = require("mysql");
 const con = require("./con");
 const fs = require("fs/promises");
-console.log("con: ", con);
+
 con.connect((err) => {
   if (err) throw err;
   console.log("Connected!");
-  createTables();
 });
 
 const filenames = ["users", "todos", "passwords", "posts", "comments"];
