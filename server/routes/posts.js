@@ -34,12 +34,36 @@ router.post("/", (req, res) => {
             .status(500)
             .send(JSON.stringify({ message: "could not add the post" }));
         } else {
-          res.status(200).send(JSON.stringify({ message: " add succeed!" }));
+          res.status(200).send(
+            JSON.stringify({
+              id: result.insertId,
+              user_id: user_id,
+              title: title,
+              body: body,
+            })
+          );
           console.log("success add the post");
         }
       }
     );
   }
+});
+
+//delete post
+
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  con.query(`delete from posts where id =${id}`, function (err, result) {
+    if (err) {
+      console.log("err: ", err);
+      res
+        .status(500)
+        .send(JSON.stringify({ message: "could not delete the post" }));
+    } else {
+      res.status(200).send(JSON.stringify({ message: "succes!" }));
+      console.log("success delete the post!");
+    }
+  });
 });
 
 module.exports = router;

@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 
 export default function Todos() {
   const [todosList, setTodosList] = useState([]);
-
+  const [newTodo, setNewTodo] = useState("");
   //   let user = JSON.parse(localStorage.getItem("currentUser"));
   const user = { id: 1 };
+
   useEffect(() => {
     const showTodos = async () => {
       if (!user.id) {
@@ -25,14 +26,112 @@ export default function Todos() {
       }
     };
     showTodos();
-  }, []);
+  }, [newTodo]);
 
-  console.log(todosList);
+  const addTodo = async () => {
+    if (newTodo === "") {
+      alert("YOU MUST FILL YOUR TODO");
+    } else {
+      try {
+        const res = await fetch(`http://localhost:3000/todos`, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ title: newTodo, user_id: 1 }),
+        });
+        if (!res.ok) {
+          console.log("res: ", res);
+          throw new Error("could not add the todos...");
+        } else {
+          const data = await res.json();
+          console.log("data: ", data);
+          setTodosList((prev) => [...prev, data]);
+          setNewTodo("");
+        }
+      } catch (err) {
+        console.log("err: ", err);
+      }
+    }
+  };
+  const deleteTodo = async (id) => {
+    console.log("id: ", id);
+    try {
+      const res = await fetch(`http://localhost:3000/todos/${id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        console.log("res: ", res);
+        throw new Error("could not delete the todos...");
+      } else {
+        const updatedList = todosList.filter((item) => item.id !== id);
+        console.log("updatedList: ", updatedList);
+        setTodosList(updatedList);
+      }
+    } catch (err) {
+      console.log("err: ", err);
+    }
+  };
+
+  const updateTodo = async (todo) => {
+    try {
+      const res = await fetch(`http://localhost:3000/todos/${todo.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify({
+          completed: todo.completed === "true" ? "false" : "true",
+        }),
+      });
+      if (!res.ok) {
+        console.log("res: ", res);
+        throw new Error("could not delete the todos...");
+      } else {
+        const data = await res.json();
+        const updatedList = todosList.map((item) =>
+          item.id === todo.id
+            ? {
+                ...item,
+                completed: todo.completed === "true" ? "false" : "true",
+              }
+            : item
+        );
+        setTodosList(updatedList);
+      }
+    } catch (err) {
+      console.log("err: ", err);
+    }
+  };
 
   return (
     <>
+      <h1>To Do List:</h1>
+      <div id="addTodo">
+        add todo: <br />
+        <input onChange={(e) => setNewTodo(e.target.value)} />
+        <button onClick={addTodo}>+</button>
+      </div>
+      <br />
       {todosList.map((item) => (
-        <li>{item.title}</li>
+        <>
+          <div id="todo">
+            {item.title}
+            <button onClick={() => deleteTodo(item.id)}>
+              <img
+                width="40"
+                height="auto"
+                src="https://www.shutterstock.com/image-vector/trash-can-icon-symbol-delete-260nw-1454137346.jpg"
+                alt="Delete"
+              />
+            </button>
+            <br></br>
+            <button
+              onClick={() => updateTodo(item)}
+              style={{
+                color: item.completed === "true" ? "green" : "red",
+              }}
+            >
+              {item.completed === "true" ? "Check" : "Uncheck"}
+            </button>
+          </div>
+        </>
       ))}
     </>
   );

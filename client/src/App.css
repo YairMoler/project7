@@ -5,17 +5,86 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+body {
+  font-size: 30px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #fdf6e3;
+  color: #333;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+h1 {
+  font-size: 50px;
+  color: #2a9d8f;
+  margin-bottom: 15px;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+/* Add Post Form */
+#addPosts,
+#addTodo {
+  background-color: rgb(249, 233, 252);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+lable {
+  margin-right: 10px;
+  font-weight: bold;
+  color: #264653;
+}
+
+input {
+  padding: 8px;
+  font-size: 30px;
+  margin-right: 10px;
+  border: 2px solid #b4e4c1;
+  border-radius: 5px;
+}
+
+#addPosts button {
+  background-color: pink;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#addPosts button:hover {
+  background-color: pink;
+}
+
+/* Posts Display */
+#post,
+#todo {
+  background: #e9feff;
+  color: #1d3557;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  width: 60px;
+  height: 50px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+img {
+  width: 80px;
+  height: auto;
+  vertical-align: middle;
+  transition: transform 0.3s ease;
+}
+
+img:hover {
+  transform: scale(1.1);
 }
 
 @keyframes logo-spin {
