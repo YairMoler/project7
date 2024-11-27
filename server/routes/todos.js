@@ -42,12 +42,36 @@ router.post("/", (req, res) => {
             .status(500)
             .send(JSON.stringify({ message: "could not add the todo" }));
         } else {
-          res.status(200).send(JSON.stringify({ message: " add succeed!" }));
+          res.status(200).send(
+            JSON.stringify({
+              id: result.insertId,
+              user_id: user_id,
+              title: title,
+              completed: "false",
+            })
+          );
           console.log("success add the todos!");
         }
       }
     );
   }
+});
+
+//delete todo
+router.delete("/:id", (req, res) => {
+  const id = req.params.id;
+
+  con.query(`delete from todos where id =${id}`, function (err, result) {
+    if (err) {
+      console.log("err: ", err);
+      res
+        .status(500)
+        .send(JSON.stringify({ message: "could not delete the todo" }));
+    } else {
+      res.status(200).send(JSON.stringify({ message: "succes!" }));
+      console.log("success delete the todos!");
+    }
+  });
 });
 
 module.exports = router;
