@@ -10,7 +10,7 @@ body {
   font-family: "Comic Sans MS", cursive, sans-serif;
   margin: 0;
   padding: 20px;
-  background-color: #fdf6e3;
+  background-color: #f6e7ff;
   color: #333;
 }
 
@@ -20,10 +20,10 @@ h1 {
   margin-bottom: 15px;
 }
 
-/* Add Post Form */
 #addPosts,
 #addTodo {
-  background-color: rgb(249, 233, 252);
+  border: 2px solid #1d3557;
+  background-color: rgb(247, 252, 233);
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
@@ -59,6 +59,7 @@ input {
 
 #post,
 #todo {
+  border: 2px solid #1d3557;
   background: #e9feff;
   color: #1d3557;
   padding: 15px;

@@ -18,7 +18,6 @@ export default function Comments(props) {
         );
         if (!res.ok) {
           console.log("res: ", res);
-
           throw new Error("could not get the posts...");
         }
         const data = await res.json();
@@ -26,6 +25,7 @@ export default function Comments(props) {
         setCommentsList(data);
       } catch (err) {
         console.log("err: ", err);
+        alert("err: ", err);
       }
     };
     showComments();
@@ -53,11 +53,11 @@ export default function Comments(props) {
           const data = await res.json();
           console.log("data: ", data);
           setCommentsList((prev) => [...prev, data]);
-          setNewName("");
-          setNewBody("");
+          setAdd(false);
         }
       } catch (err) {
         console.log("err: ", err);
+        alert("err: ", err);
       }
     }
   };
@@ -78,6 +78,7 @@ export default function Comments(props) {
       }
     } catch (err) {
       console.log("err: ", err);
+      alert("err: ", err);
     }
   };
   return (

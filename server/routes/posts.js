@@ -4,7 +4,8 @@ const con = require("../con");
 
 //get all posts
 router.get("/", async (req, res) => {
-  con.query(`select * from posts `, function (err, result) {
+  const limit = req.query.limit;
+  con.query(`select * from posts limit ${limit}`, function (err, result) {
     if (err) {
       res
         .status(500)
@@ -64,6 +65,26 @@ router.delete("/:id", (req, res) => {
       console.log("success delete the post!");
     }
   });
+});
+//update post
+router.patch("/:id", (req, res) => {
+  const id = req.params.id;
+  const newTitle = req.body.editedTitle;
+  con.query(
+    `update posts set title="${newTitle}" where id =${id}`,
+    function (err, result) {
+      if (err) {
+        console.log("err: ", err);
+        res
+          .status(500)
+          .send(JSON.stringify({ message: "could not update the title" }));
+      } else {
+        console.log("result: ", result);
+        res.status(200).send(JSON.stringify(newTitle));
+        console.log("success update the title!");
+      }
+    }
+  );
 });
 
 module.exports = router;
