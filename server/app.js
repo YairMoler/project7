@@ -2,6 +2,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const cors = require("cors");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -9,7 +10,7 @@ const todosRouter = require("./routes/todos");
 const postsRouter = require("./routes/posts");
 const commentsRouter = require("./routes/comments");
 const loginRouter = require("./routes/login.js");
-const cors = require("cors");
+const registerRouter = require("./routes/register.js");
 
 var app = express();
 
@@ -26,5 +27,6 @@ app.use("/todos", todosRouter);
 app.use("/posts", postsRouter);
 app.use("/comments", commentsRouter);
 app.use("/login", loginRouter);
+app.use("/register", registerRouter);
 
 module.exports = app;

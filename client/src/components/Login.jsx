@@ -23,6 +23,9 @@ export default function Login() {
     };
 
     const handleSubmit = async (event) => {
+        console.log("password: ", password);
+        console.log("username: ", username);
+
         event.preventDefault();
         if (!password.match(/[0-9]+/)) return setError("password must be a number");
         if (username.length < 4 || password.length < 4) return setError("username and password must be at least 4 characters long");
@@ -31,11 +34,14 @@ export default function Login() {
             headers: { "Content-Type": "application/json" },
             method: "POST",
         });
-
+        if (!res.ok && res.status !== 401) return setError("something went wrong try again");
+        if (res.status === 401) return setError("username or password is incorrect");
         const user = await res.json();
-        if (!user.id) return setError("username or password is incorrect");
+
         localStorage.setItem("user", JSON.stringify(user));
         navigate(`home/${user.username}/`);
+        setPassword("");
+        setUsername("");
     };
     return (
         <>
