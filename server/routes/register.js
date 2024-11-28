@@ -10,7 +10,7 @@ router.post("/", (req, res) => {
 
         if (err) {
             console.log("err: ", err);
-            return res.status(400).send("username already exist");
+            return res.status(400).send("username or email already exist");
         }
         console.log(result);
         const newID = result.insertId;

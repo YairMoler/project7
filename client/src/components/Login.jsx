@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -39,7 +39,7 @@ export default function Login() {
         const user = await res.json();
 
         localStorage.setItem("user", JSON.stringify(user));
-        navigate(`home/${user.username}/`);
+        navigate(`/home/${user.username}/`);
         setPassword("");
         setUsername("");
     };
@@ -55,6 +55,7 @@ export default function Login() {
                 <br />
                 <button onClick={handleSubmit}>login</button>
             </form>
+            <NavLink to="/register"> register </NavLink>
             {error && <h2>{error}</h2>}
         </>
     );
