@@ -8,7 +8,9 @@ router.get("/", async (req, res) => {
   if (!post_id) {
     return res
       .status(400)
-      .send(JSON.stringify({ message: "there is no post-id for the todos" }));
+      .send(
+        JSON.stringify({ message: "there is no post-id for the comments" })
+      );
   }
   con.query(
     `select * from comments where post_id = ${post_id}`,
@@ -16,10 +18,10 @@ router.get("/", async (req, res) => {
       if (err) {
         res
           .status(500)
-          .send(JSON.stringify({ message: "could not send the todos" }));
+          .send(JSON.stringify({ message: "could not send the comments" }));
       } else {
         res.status(200).send(JSON.stringify(result));
-        console.log("success get the todos!");
+        console.log("success get the comments!");
       }
     }
   );
@@ -34,7 +36,7 @@ router.post("/", (req, res) => {
   if (!name1 || !body) {
     return res
       .status(400)
-      .send(JSON.stringify({ message: "name or body is empty" }));
+      .send(JSON.stringify({ message: "name/body is empty" }));
   } else {
     con.query(
       `insert into comments (user_id , post_id ,body , name ) values (${user_id} ,${post_id} , "${body}" , "${name1}")`,

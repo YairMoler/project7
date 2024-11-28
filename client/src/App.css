@@ -177,3 +177,65 @@ img:hover {
 #navbar button:hover {
   background-color: #ef87c0;
 }
+.login-signup {
+  width: 30vw;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.login-signup h1 {
+  color: #459d92; /* Teal */
+  margin-bottom: 20px;
+}
+
+.login-signup label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.login-signup input {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.login-signup button {
+  background-color: #f1b7e6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-signup button:hover {
+  background-color: #b4d7ed;
+}
+
+.login-signup a {
+  color: #417079;
+  text-decoration: none;
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.login-signup a:hover {
+  text-decoration: underline;
+}
+
+.login-signup .error {
+  color: #b0237a; /* Red for error messages */
+  margin-top: 15px;
+}

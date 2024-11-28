@@ -5,7 +5,6 @@ const con = require("../con");
 //get todos
 router.get("/", async (req, res) => {
   const user_id = req.query.user_id;
-
   console.log("user_id : ", user_id);
   if (!user_id) {
     return res

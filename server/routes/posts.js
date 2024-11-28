@@ -25,7 +25,7 @@ router.post("/", (req, res) => {
   if (!title || !body) {
     return res
       .status(400)
-      .send(JSON.stringify({ message: "title or body is empty" }));
+      .send(JSON.stringify({ message: "title or body/title is empty" }));
   } else {
     con.query(
       `insert into posts (user_id , title ,body) values (${user_id} , "${title}" , "${body}")`,
