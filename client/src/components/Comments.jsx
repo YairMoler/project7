@@ -17,7 +17,8 @@ export default function Comments(props) {
           `http://localhost:3000/comments?post_id=${props.postId}`
         );
         if (!res.ok) {
-          console.log("res: ", res);
+          const data = await res.json();
+          alert(data.message);
           throw new Error("could not get the posts...");
         }
         const data = await res.json();
@@ -25,7 +26,6 @@ export default function Comments(props) {
         setCommentsList(data);
       } catch (err) {
         console.log("err: ", err);
-        alert("err: ", err);
       }
     };
     showComments();
@@ -47,8 +47,9 @@ export default function Comments(props) {
           }),
         });
         if (!res.ok) {
-          console.log("res: ", res);
-          throw new Error("could not add the todos...");
+          const data = await res.json();
+          alert(data.message);
+          throw new Error("could not add the comments...");
         } else {
           const data = await res.json();
           console.log("data: ", data);
@@ -57,7 +58,6 @@ export default function Comments(props) {
         }
       } catch (err) {
         console.log("err: ", err);
-        alert("err: ", err);
       }
     }
   };
@@ -69,8 +69,9 @@ export default function Comments(props) {
         method: "DELETE",
       });
       if (!res.ok) {
-        console.log("res: ", res);
-        throw new Error("could not delete the todos...");
+        const data = await res.json();
+        alert(data.message);
+        throw new Error("could not delete the comments...");
       } else {
         const updatedList = commentsList.filter((item) => item.id !== id);
         console.log("updatedList: ", updatedList);
@@ -78,7 +79,6 @@ export default function Comments(props) {
       }
     } catch (err) {
       console.log("err: ", err);
-      alert("err: ", err);
     }
   };
   return (

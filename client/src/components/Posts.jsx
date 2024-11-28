@@ -17,7 +17,8 @@ export default function Posts() {
       try {
         const res = await fetch(`http://localhost:3000/posts?limit=${limit}`);
         if (!res.ok) {
-          console.log("res: ", res);
+          const data = await res.json();
+          alert(data.message);
           throw new Error("could not get the posts...");
         }
         const data = await res.json();
@@ -25,7 +26,6 @@ export default function Posts() {
         setPostsList(data);
       } catch (err) {
         console.log("err: ", err);
-        alert("err: ", err);
       }
     };
     showPosts();
@@ -47,7 +47,8 @@ export default function Posts() {
           }),
         });
         if (!res.ok) {
-          console.log("res: ", res);
+          const data = await res.json();
+          alert(data.message);
           throw new Error("could not add the posts...");
         } else {
           const data = await res.json();
@@ -58,7 +59,6 @@ export default function Posts() {
         }
       } catch (err) {
         console.log("err: ", err);
-        alert("err: ", err);
       }
     }
   };
@@ -71,7 +71,8 @@ export default function Posts() {
         method: "DELETE",
       });
       if (!res.ok) {
-        console.log("res: ", res);
+        const data = await res.json();
+        alert(data.message);
         throw new Error("could not delete the post...");
       } else {
         const updatedList = postsList.filter((item) => item.id !== id);
@@ -80,7 +81,6 @@ export default function Posts() {
       }
     } catch (err) {
       console.log("err: ", err);
-      alert("err: ", err);
     }
   };
 
@@ -93,7 +93,8 @@ export default function Posts() {
         body: JSON.stringify({ editedTitle: editedTitle }),
       });
       if (!res.ok) {
-        console.log(res);
+        const data = await res.json();
+        alert(data.message);
         throw new Error("could not update the posts...");
       } else {
         const updatedList = postsList.map((post) =>
@@ -105,7 +106,6 @@ export default function Posts() {
       }
     } catch {
       console.log("err: ", err);
-      alert("err: ", err);
     }
   };
   return (

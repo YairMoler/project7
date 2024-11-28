@@ -15,7 +15,8 @@ export default function Todos() {
           `http://localhost:3000/todos?user_id=${user.id}`
         );
         if (!res.ok) {
-          console.log("res: ", res);
+          const data = await res.json();
+          alert(data.message);
 
           throw new Error("could not get the todos...");
         }
@@ -40,7 +41,8 @@ export default function Todos() {
           body: JSON.stringify({ title: newTodo, user_id: user.id }),
         });
         if (!res.ok) {
-          console.log("res: ", res);
+          const data = await res.json();
+          alert(data.message);
           throw new Error("could not add the todos...");
         } else {
           const data = await res.json();
@@ -60,7 +62,8 @@ export default function Todos() {
         method: "DELETE",
       });
       if (!res.ok) {
-        console.log("res: ", res);
+        const data = await res.json();
+        alert(data.message);
         throw new Error("could not delete the todos...");
       } else {
         const updatedList = todosList.filter((item) => item.id !== id);
@@ -82,7 +85,8 @@ export default function Todos() {
         }),
       });
       if (!res.ok) {
-        console.log("res: ", res);
+        const data = await res.json();
+        alert(data.message);
         throw new Error("could not delete the todos...");
       } else {
         const data = await res.json();
