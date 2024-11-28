@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import SinglePost from "./SinglePost";
 export default function Posts() {
   const [postsList, setPostsList] = useState([]);
   const [newTitle, setNewTitle] = useState("");
   const [newBody, setNewBody] = useState("");
+
   let user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -90,21 +92,7 @@ export default function Posts() {
       </div>
       <br />
       {postsList.map((item) => (
-        <>
-          <div id="post">
-            {item.title}
-            <br /> {item.body}
-            <br />
-            {item.user_id === user.id && (
-              <button onClick={() => deletePost(item.id)}>
-                <img
-                  src="https://www.shutterstock.com/image-vector/trash-can-icon-symbol-delete-260nw-1454137346.jpg"
-                  alt="Delete"
-                />
-              </button>
-            )}
-          </div>
-        </>
+        <SinglePost item={item} userId={user.id} deletePost={deletePost} />
       ))}
     </>
   );

@@ -57,7 +57,6 @@ input {
   background-color: pink;
 }
 
-/* Posts Display */
 #post,
 #todo {
   background: #e9feff;
@@ -67,20 +66,19 @@ input {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
-button {
-  width: 60px;
+#delete {
+  width: 50px;
   height: 50px;
-  background: none;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+}
+#check {
+  width: fit-content;
+  height: fit-content;
+  background-color: rgb(255, 255, 255);
   border: none;
   cursor: pointer;
-}
-
-img {
-  width: 80px;
-  height: auto;
-  vertical-align: middle;
-  transition: transform 0.3s ease;
 }
 
 img:hover {
@@ -134,4 +132,47 @@ img:hover {
 
 #info li strong {
   color: #833375; /* Coral */
+}
+#navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #d3dbda; /* Teal */
+
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#navbar div {
+  margin: 0 10px;
+}
+
+#navbar a {
+  text-decoration: none;
+  color: #072b2a;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+
+#navbar a:hover {
+  background-color: #83b6f9;
+  color: #000000;
+}
+
+#navbar button {
+  width: fit-content;
+  background-color: #2f042c;
+  color: #ffffff;
+  border: none;
+  padding: 8px 15px;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#navbar button:hover {
+  background-color: #ef87c0;
 }

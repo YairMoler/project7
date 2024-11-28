@@ -114,7 +114,7 @@ export default function Todos() {
         <>
           <div id="todo">
             {item.title}
-            <button onClick={() => deleteTodo(item.id)}>
+            <button id="delete" onClick={() => deleteTodo(item.id)}>
               <img
                 width="40"
                 height="auto"
@@ -124,6 +124,7 @@ export default function Todos() {
             </button>
             <br></br>
             <button
+              id="check"
               onClick={() => updateTodo(item)}
               style={{
                 color: item.completed === "true" ? "green" : "red",

@@ -24,7 +24,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/todos", todosRouter);
 app.use("/posts", postsRouter);
-// app.use("/comments", commentsRouter);
+app.use("/comments", commentsRouter);
 app.use("/login", loginRouter);
 
 module.exports = app;
