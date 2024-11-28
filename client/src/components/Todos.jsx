@@ -27,7 +27,7 @@ export default function Todos() {
       }
     };
     showTodos();
-  }, [newTodo]);
+  }, []);
 
   const addTodo = async () => {
     if (newTodo === "") {
@@ -106,7 +106,7 @@ export default function Todos() {
       <h1>To Do List:</h1>
       <div id="addTodo">
         add todo: <br />
-        <input onChange={(e) => setNewTodo(e.target.value)} />
+        <input value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
         <button onClick={addTodo}>+</button>
       </div>
       <br />

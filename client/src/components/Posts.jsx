@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import SinglePost from "./SinglePost";
+//posts
 export default function Posts() {
   const [postsList, setPostsList] = useState([]);
   const [newTitle, setNewTitle] = useState("");
   const [newBody, setNewBody] = useState("");
-
+  const [limit, setLimit] = useState(5);
   let user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -14,7 +15,7 @@ export default function Posts() {
       }
       try {
         const res = await fetch(
-          `http://localhost:3000/posts?user_id=${user.id}`
+          `http://localhost:3000/posts?user_id=${user.id}&limit=${limit}`
         );
         if (!res.ok) {
           console.log("res: ", res);
@@ -26,10 +27,11 @@ export default function Posts() {
         setPostsList(data);
       } catch (err) {
         console.log("err: ", err);
+        alert("err: ", err);
       }
     };
     showPosts();
-  }, [newTitle]);
+  }, [newTitle, limit]);
 
   const addPost = async () => {
     if (newTitle === "" || newBody === "") {
@@ -47,16 +49,17 @@ export default function Posts() {
         });
         if (!res.ok) {
           console.log("res: ", res);
-          throw new Error("could not add the todos...");
+          throw new Error("could not add the posts...");
         } else {
           const data = await res.json();
           console.log("data: ", data);
-          setPostsList((prev) => [...prev, data]);
+          setPostsList((prev) => [data, ...prev]);
           setNewTitle("");
           setNewBody("");
         }
       } catch (err) {
         console.log("err: ", err);
+        alert("err: ", err);
       }
     }
   };
@@ -76,6 +79,7 @@ export default function Posts() {
       }
     } catch (err) {
       console.log("err: ", err);
+      alert("err: ", err);
     }
   };
 
@@ -85,15 +89,16 @@ export default function Posts() {
       <div id="addPosts">
         add post: <br />
         <lable>title:</lable>
-        <input onChange={(e) => setNewTitle(e.target.value)} />
+        <input value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
         <lable>body:</lable>
-        <input onChange={(e) => setNewBody(e.target.value)} />
+        <input value={newBody} onChange={(e) => setNewBody(e.target.value)} />
         <button onClick={addPost}>+</button>
       </div>
       <br />
       {postsList.map((item) => (
         <SinglePost item={item} userId={user.id} deletePost={deletePost} />
       ))}
+      <button onClick={() => setLimit((prev) => prev + 5)}>show more:</button>
     </>
   );
 }

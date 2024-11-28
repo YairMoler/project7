@@ -4,7 +4,8 @@ const con = require("../con");
 
 //get all posts
 router.get("/", async (req, res) => {
-  con.query(`select * from posts `, function (err, result) {
+  const limit = req.query.limit;
+  con.query(`select * from posts limit ${limit}`, function (err, result) {
     if (err) {
       res
         .status(500)
