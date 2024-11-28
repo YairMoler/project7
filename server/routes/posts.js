@@ -66,5 +66,25 @@ router.delete("/:id", (req, res) => {
     }
   });
 });
+//update post
+router.patch("/:id", (req, res) => {
+  const id = req.params.id;
+  const newTitle = req.body.editedTitle;
+  con.query(
+    `update posts set title="${newTitle}" where id =${id}`,
+    function (err, result) {
+      if (err) {
+        console.log("err: ", err);
+        res
+          .status(500)
+          .send(JSON.stringify({ message: "could not update the title" }));
+      } else {
+        console.log("result: ", result);
+        res.status(200).send(JSON.stringify(newTitle));
+        console.log("success update the title!");
+      }
+    }
+  );
+});
 
 module.exports = router;

@@ -6,20 +6,18 @@ export default function Posts() {
   const [newTitle, setNewTitle] = useState("");
   const [newBody, setNewBody] = useState("");
   const [limit, setLimit] = useState(5);
+
   let user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const showPosts = async () => {
-      if (!user.id) {
-        return;
+      if (!user) {
+        throw new Error("something went wrong");
       }
       try {
-        const res = await fetch(
-          `http://localhost:3000/posts?user_id=${user.id}&limit=${limit}`
-        );
+        const res = await fetch(`http://localhost:3000/posts?limit=${limit}`);
         if (!res.ok) {
           console.log("res: ", res);
-
           throw new Error("could not get the posts...");
         }
         const data = await res.json();
@@ -33,6 +31,7 @@ export default function Posts() {
     showPosts();
   }, [newTitle, limit]);
 
+  //add post
   const addPost = async () => {
     if (newTitle === "" || newBody === "") {
       alert("you must fill your Post");
@@ -63,6 +62,8 @@ export default function Posts() {
       }
     }
   };
+
+  //delete post
   const deletePost = async (id) => {
     console.log("id: ", id);
     try {
@@ -71,7 +72,7 @@ export default function Posts() {
       });
       if (!res.ok) {
         console.log("res: ", res);
-        throw new Error("could not delete the todos...");
+        throw new Error("could not delete the post...");
       } else {
         const updatedList = postsList.filter((item) => item.id !== id);
         console.log("updatedList: ", updatedList);
@@ -83,6 +84,30 @@ export default function Posts() {
     }
   };
 
+  //edit title
+  const editTitle = async (postId, editedTitle, oldTitle, setEdit) => {
+    try {
+      const res = await fetch(`http://localhost:3000/posts/${postId}`, {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ editedTitle: editedTitle }),
+      });
+      if (!res.ok) {
+        console.log(res);
+        throw new Error("could not update the posts...");
+      } else {
+        const updatedList = postsList.map((post) =>
+          post.title === oldTitle ? { ...post, title: editedTitle } : post
+        );
+        console.log("updatedList: ", updatedList);
+        setEdit(false);
+        setPostsList(updatedList);
+      }
+    } catch {
+      console.log("err: ", err);
+      alert("err: ", err);
+    }
+  };
   return (
     <>
       <h1>Posts:</h1>
@@ -96,7 +121,12 @@ export default function Posts() {
       </div>
       <br />
       {postsList.map((item) => (
-        <SinglePost item={item} userId={user.id} deletePost={deletePost} />
+        <SinglePost
+          item={item}
+          userId={user.id}
+          deletePost={deletePost}
+          editTitle={editTitle}
+        />
       ))}
       <button onClick={() => setLimit((prev) => prev + 5)}>show more:</button>
     </>
